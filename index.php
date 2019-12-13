@@ -1,79 +1,70 @@
 <?php
 
-// format: alt+cmd+L
-
-$form = [
-    'attr' => [
-        'action' => 'index.php',
-        'class' => 'my=form',
-        'id' => 'login-form'
+$thermo = [
+    [
+        'form' => 'circle',
+        'color' => 'green',
+        'text' => '"As"',
     ],
-    'fields' => [
-        'first_name' => [
-            'label' => 'First name',
-            'type' => 'text',
-            'error' => 'Ivyko klaida',
-            'extra' => [
-                'attr' => [
-                    'class' => 'first-name',
-                    'id' => 'first-name',
-                ]
-            ]
-        ],
-        'last_name' => [
-            'label' => 'Last name',
-            'type' => 'text',
-            'extra' => [
-                'attr' => [
-                    'class' => 'last-name',
-                    'id' => 'last-name',
-                ]
-            ]
-        ],
+    [
+        'form' => 'sqr',
+        'color' => 'green',
+        'text' => '"B"',
     ],
-    'buttons' => [
-        'save' => [
-            'title' => 'Save',
-            'extra' => [
-                'attr' => [
-                    'class' => 'save-btn',
-                ]
-            ]
-        ]
+    [
+        'form' => 'sqr',
+        'color' => 'orange',
+        'text' => '"B"',
+    ],
+    [
+        'form' => 'sqr',
+        'color' => 'red',
+        'text' => '"D"',
     ]
 ];
 
-$array = [
-    'name' => 'lol'
-];
-
-if (isset($array['name'])) {
-    $x = $array['name'];
-} else {
-    $x = 'nepavyko';
-}
-
-$x = $array['name'] ?? 'nepaejo';
-
-var_dump($x);
-
-function html_attr($attr)
-{
-    $attributes = [];
-
-    foreach ($attr as $attr_index => $attr_value) {
-        $attribute = "$attr_index=\"$attr_value\"";
-        $attributes[] = $attribute;
-    }
-
-    return implode(' ', $attributes);
-}
-
 ?>
-<html>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .sqr_bckground {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            height: 100px;
+            border: 2px solid black;
+            color: black;
+        }
+        .form.circle {
+            border-radius: 50%;
+        }
+        .form.green {
+            background-color: green;
+        }
+        .form.orange {
+            background-color: orange;
+        }
+        .form.red {
+            background-color: red;
+        }
+    </style>
+</head>
+
 <body>
 
-<?php require('templates/form.tpl.php'); ?>
+<?php require('templates/thermo.tpl.php'); ?>
 
 </body>
 </html>
