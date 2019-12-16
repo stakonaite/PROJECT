@@ -1,104 +1,27 @@
 <?php
-/*
-$array = [
-        't' => [
-            'b' => [
-                'a' => 'my value'
-            ]
-        ]
+
+$natos = [
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'A',
+    'B'
 ];
 
-$array['t']['b'][] = 'my value';
-var_dump($array);
-*/
+$root = rand(0, count($natos) - 1);
+//arba $natu_rand = array_rand($natos);
+$chord = [];
 
-/*
-$receptai = [];
-
-$ingridientai = [
-    'obuolys',
-    'miltai',
-    'cukrus',
-    'pienas'
-];
-
-foreach ($ingridientai as $produktas) {
-    $receptai['pyragas'][] = $produktas;
+for ($i = 0; $i < 3; $i++, $root += 2) {
+    if ($root >= count($natos)) {
+        $nata = $root - count($natos);
+    } else {
+        $nata = $root;
+    }
+    $chord[$nata] = $natos[$nata];
 }
-
-var_dump($receptai);
-
-*/
-/*
-$one = 't';
-$two = ['au' => 'pzdc'];
-$three = [$one => $two];
-
-$three = [
-    't' => [
-        'au' => 'pzdc'
-    ]
-];
-
-print $three['t']['au'];
-*/
-
-/*
-$a = 1;
-$b = 4;
-
-function add($number_1, $number_2){
-    $number = $number_1 + $number_2;
-    return $number;
-}
-
-print add($a, $b);
-
-*/
-
-/*
-$form = [
-    'fields' => [
-        'first_name' => [
-            'value' => ''
-        ]
-    ]
-];
-
-function change(&$field){
-    $field['value'] = 'Aurimas';
-}
-
-foreach ($form['fields'] as &$field){
-    change($field);
-}
-
-var_dump($form);
-*/
-
-$library = [
-    [
-        'name' => 'Harry Potter',
-        'author' => 'J.K.Rowling',
-        'Year' => '1997',
-    ],
-    [
-        'name' => 'A glass of milk',
-        'author' => 'Herbjord Wassmo',
-        'Year' => '2006',
-    ],
-    [
-        'name' => 'Dessert Flower',
-        'author' => 'Waris Dirie',
-        'Year' => '2009',
-    ],
-    [
-        'name' => 'The day I Learned to Live',
-        'author' => 'Laurent Gounelle',
-        'Year' => '2015',
-    ],
-];
-
 
 ?>
 <!doctype html>
@@ -110,37 +33,49 @@ $library = [
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        .background {
+        .bckground {
             display: flex;
-            flex-wrap: wrap;
-        }
-        .book {
-            width: calc(100% / 3 - 8px);
-            box-sizing: border-box;
-            height: 180px;
-            border: 2px solid green;
-            background-color: lightpink;
-            color: dimgrey;
-            display: flex;
-            justify-content: space-around;
+            flex-direction: row;
+            justify-content: center;
             align-items: center;
-            margin-right: 12px;
-            margin-bottom: 12px;
         }
 
-        .book:nth-child(3n){
-            margin-right: 0;
+        .div {
+            width: 50px;
+            height: 100px;
+            border: 2px solid black;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .push {
+            background-color: grey;
         }
     </style>
 </head>
 <body>
 
-<div class="background">
-    <?php foreach ($library as $book): ?>
-    <div class="book">
-        <?php print $book['name'] . ' ' . $book['author'] . ' ' . $book['Year']; ?>
-    </div>
-    <?php endforeach;?>
+
+<div class="bckground">
+    <!--Trumpa versija
+<!--    --><?php //foreach ($natos as $key => $nata): ?>
+<!--    <div class="div--><?php //print isset($chord[$key]) ? 'push' : ''; ?><!--">-->
+<!--        <span>--><?php //print $nata; ?><!--</span>-->
+<!--    </div>-->
+<!--    --><?php //endforeach; ?>
+
+
+    <?php foreach ($natos as $key => $nata): ?>
+        <?php if (isset($chord[$key])): ?>
+            <div class="div push">
+                <span><?php print $nata; ?></span>
+            </div>
+        <?php else: ?>
+            <div class="div">
+                <span><?php print $nata; ?></span>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
 </div>
 
 </body>
