@@ -6,15 +6,21 @@ require('templates/functions/html.php');
 
 function form_success(&$form, $safe_input)
 {
-    $x = $safe_input['x'];
-    $y = $safe_input['y'];
-    $sum = $x + $y;
-    var_dump($sum);
+//    $x = $safe_input['x'];
+//    $y = $safe_input['y'];
+//    $sum = $x + $y;
+//    var_dump($sum);
+    $form['message'] = 'You logged in succesfully!';
+    foreach ($form['fields'] as $key => &$value) {
+        $value['value'] = '';
+     //   var_dump($value['value']);
+    }
 }
 
 function form_fail(&$form, $safe_input)
 {
-var_dump('klaida');
+    $form['message'] = 'Log in failed, try again following the rules';
+//$form['fields']['password']['value'] = '';  jeigu fail istrina laukelyje slaptazodi
 }
 
 $form = [
@@ -28,12 +34,12 @@ $form = [
         'id' => 'login-form',
     ],
     'fields' => [
-        'x' => [
+        'name' => [
             'validators' => [
                 'validate_not_empty',
                 'validate_is_number'
             ],
-            'label' => 'x',
+            'label' => 'name',
             'type' => 'text',
             'value' => '',
             'extra' => [
@@ -42,12 +48,12 @@ $form = [
                 ]
             ]
         ],
-        'y' => [
+        'surname' => [
             'validators' => [
                 'validate_not_empty',
                 'validate_is_number'
             ],
-            'label' => 'y',
+            'label' => 'surname',
             'type' => 'text',
             'value' => '',
             'extra' => [

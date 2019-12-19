@@ -35,4 +35,8 @@
             <?php print $button ['title']; ?>
         </button>
     <?php endforeach; ?>
+
+    <?php if (isset($form['message'])): ?>
+        <p><?php print $form['message']; ?></p>
+    <?php endif; ?>
 </form>
