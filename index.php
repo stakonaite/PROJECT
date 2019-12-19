@@ -23,6 +23,48 @@ $thermo = [
     ]
 ];
 
+$stories = [
+    ['color' => 'green', 'text' => 'Studinam'],
+    ['color' => 'green', 'text' => 'Php'],
+    ['color' => 'red', 'text' => 'su'],
+    ['color' => 'orange', 'text' => 'Dainium'],
+];
+
+$rand_level = rand(0, 3);
+
+function thermo_set_low(&$thermo)
+{
+    foreach ($thermo as &$figura) {
+        $figura['color'] = 'red';
+    }
+}
+
+thermo_set_low($thermo);
+
+
+function thermo_set_level(&$thermo, $level)
+{
+    foreach ($thermo as $key => &$value) {
+        if ($key > $level) {
+            $value['color'] = 'grey';
+        }
+        if ($key != $level) {
+            unset($value['text']);
+        }
+    }
+}
+
+thermo_set_level($thermo, $rand_level);
+
+function build_storyline (&$stories, $level){
+    foreach ($stories as $key => $story){
+        if ($key > $level){
+            unset($stories[$key]);
+        }
+    }
+}
+build_storyline($stories, $rand_level);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -38,6 +80,7 @@ $thermo = [
             justify-content: space-around;
             align-items: center;
         }
+
         .form {
             display: flex;
             justify-content: center;
@@ -47,17 +90,34 @@ $thermo = [
             border: 2px solid black;
             color: black;
         }
+
         .form.circle {
             border-radius: 50%;
         }
+
         .form.green {
             background-color: green;
         }
+
         .form.orange {
             background-color: orange;
         }
+
         .form.red {
             background-color: red;
+        }
+
+        .form.grey {
+            background-color: grey;
+        }
+        li.red {
+            color: red;
+        }
+        li.orange{
+            color: orange;
+        }
+        li.green{
+            color: green;
         }
     </style>
 </head>
@@ -65,6 +125,7 @@ $thermo = [
 <body>
 
 <?php require('templates/thermo.tpl.php'); ?>
+<?php require('templates/stories.tpl.php'); ?>
 
 </body>
 </html>
