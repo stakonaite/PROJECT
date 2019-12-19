@@ -1,27 +1,69 @@
 <?php
 
-$natos = [
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'A',
-    'B'
+//$array = ['validate_not_empty', 'validate_number', 'validate_email'];
+//
+//function validate_not_empty()
+//{
+//    print 'validate is empty';
+//}
+//
+//function validate_email()
+//{
+//    print 'validate email';
+//}
+//
+//foreach ($array as $value) {
+//    if (is_callable($value)) {
+//        $value();
+//    } else {
+//        var_dump('neirasyta_funkcijos_reiksme');
+//    }
+//}
+
+$users = [
+    [
+        'id' => 1,
+        'name' => 'Bill',
+    ],
+    [
+        'id' => 2,
+        'name' => 'John',
+    ],
 ];
 
-$root = rand(0, count($natos) - 1);
-//arba $natu_rand = array_rand($natos);
-$chord = [];
+$comments = [
+    [
+        'id' => 1,
+        'userId' => 1,
+        'date' => '2019-12-17',
+        'comment' => 'This sucks'
+    ],
+    [
+        'id' => 2,
+        'userId' => 1,
+        'date' => '2018-11-17',
+        'comment' => 'I like that'
+    ],
+    [
+        'id' => 3,
+        'userId' => 2,
+        'date' => '2019-10-17',
+        'comment' => 'This is a comment'
+    ],
+];
 
-for ($i = 0; $i < 3; $i++, $root += 2) {
-    if ($root >= count($natos)) {
-        $nata = $root - count($natos);
-    } else {
-        $nata = $root;
+$array = [];
+
+foreach ($comments as $comment){
+    foreach ($users as $user){
+        if ($comment['userId'] === $user['id']){
+            $comment['author'] = $user['name'];
+            $array[] = $comment;
+         //   print $user['name'] . $comment['comment'] . "</br>";
+        }
     }
-    $chord[$nata] = $natos[$nata];
 }
+
 
 ?>
 <!doctype html>
@@ -33,50 +75,27 @@ for ($i = 0; $i < 3; $i++, $root += 2) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        .bckground {
+        .flex{
             display: flex;
-            flex-direction: row;
             justify-content: center;
             align-items: center;
         }
-
-        .div {
-            width: 50px;
+        .div{
+            display: flex;
+            justify-content: space-around;
             height: 100px;
-            border: 2px solid black;
-            padding: 10px;
+            width: 300px;
+            border: 2px solid darkslateblue;
             margin: 10px;
-        }
-
-        .push {
-            background-color: grey;
         }
     </style>
 </head>
-<body>
+<body class="flex">
 
-
-<div class="bckground">
-    <!--Trumpa versija
-<!--    --><?php //foreach ($natos as $key => $nata): ?>
-<!--    <div class="div--><?php //print isset($chord[$key]) ? 'push' : ''; ?><!--">-->
-<!--        <span>--><?php //print $nata; ?><!--</span>-->
-<!--    </div>-->
-<!--    --><?php //endforeach; ?>
-
-
-    <?php foreach ($natos as $key => $nata): ?>
-        <?php if (isset($chord[$key])): ?>
-            <div class="div push">
-                <span><?php print $nata; ?></span>
-            </div>
-        <?php else: ?>
-            <div class="div">
-                <span><?php print $nata; ?></span>
-            </div>
-        <?php endif; ?>
-    <?php endforeach; ?>
+<?php foreach ($array as $key):?>
+<div class="div">
+    <?php print $key['author'] . ' ' . $key['date'] . '</br>' . $key['comment'];?>
 </div>
-
+<?php endforeach;?>
 </body>
 </html>
