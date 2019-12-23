@@ -32,8 +32,19 @@ function validate_form(&$form, $safe_input)
         $field['value'] = $field_value;
 
         if (isset($field['validators'])) {
-            foreach ($field['validators'] as $validator) {
-                $is_valid = $validator($field_value, $field);
+            foreach ($field['validators'] as $validator_index => $validator) {
+                if (is_array($validator)) {
+//                    var_dump([
+//                        'validator_index' => $validator_index,
+//                        'validator' => $validator
+//                    ]);
+                    $function_val_index = $validator_index;
+                    $params = $validator;
+                    $is_valid = $function_val_index($field_value, $field, $params);
+                } else {
+                    $is_valid = $validator($field_value, $field);
+                }
+
                 if (!$is_valid) {
                     $success = false;
                     break;
@@ -42,13 +53,27 @@ function validate_form(&$form, $safe_input)
         }
     }
 
-    if (isset($form['callbacks'])) {
-        $cb_index = $success ? 'success' : 'fail';
-        $success_function = $form['callbacks'][$cb_index] ?? false;
-        if ($success_function) {
-            $success_function($form, $safe_input);
+    foreach ($form['validators'] as $validator_index => $validator) {
+        if (is_array($validator)) {
+            $function_val_index = $validator_index;
+            $params = $validator;
+            $is_valid = $function_val_index($safe_input, $form, $params);
+        } else {
+            $is_valid = $validator($safe_input, $form);
+        }
+
+        if (!$is_valid) {
+            $success = false;
+            break;
         }
     }
+        if (isset($form['callbacks'])) {
+            $cb_index = $success ? 'success' : 'fail';
+            $success_function = $form['callbacks'][$cb_index] ?? false;
+            if ($success_function) {
+                $success_function($form, $safe_input);
+            }
+        }
 
         return $success;
-}
+    }

@@ -10,17 +10,17 @@ function form_success(&$form, $safe_input)
 //    $y = $safe_input['y'];
 //    $sum = $x + $y;
 //    var_dump($sum);
-    $form['message'] = 'You logged in succesfully!';
+    $form['message'] = 'Gal ir normalus!';
     foreach ($form['fields'] as $key => &$value) {
         $value['value'] = '';
-     //   var_dump($value['value']);
+        //   var_dump($value['value']);
     }
 }
 
 function form_fail(&$form, $safe_input)
 {
-    $form['message'] = 'Log in failed, try again following the rules';
-//$form['fields']['password']['value'] = '';  jeigu fail istrina laukelyje slaptazodi
+    $form['message'] = 'Nenormalus';
+//$form['fields']['password']['value'] = '';  jeigu fail istrina    laukelyje slaptazodi
 }
 
 $form = [
@@ -37,43 +37,92 @@ $form = [
         'name' => [
             'validators' => [
                 'validate_not_empty',
-                'validate_is_number'
+                'validate_has_space',
+                'validate_string_length' => [
+                    'min' => [
+                        'value' => 7,
+                        'message' => 'Name is too short',
+                    ],
+                    'max' => [
+                        'value' => 50,
+                        'message' => 'Name is too long'
+                    ]
+                ]
             ],
-            'label' => 'name',
+            'label' => 'Vardas ir Pavarde',
             'type' => 'text',
             'value' => '',
             'extra' => [
                 'attr' => [
-                    'placeholder' => 'irasyti reiksme',
+                    'placeholder' => 'Vardas ir Pavarde',
                 ]
             ]
         ],
-        'surname' => [
+        'password' => [
             'validators' => [
                 'validate_not_empty',
-                'validate_is_number'
+                'validate_string_length' => [
+                    'min' => [
+                        'value' => 7,
+                        'message' => 'Password is too weak',
+                    ],
+                    'max' => [
+                        'value' => 20,
+                        'message' => 'Password is too long to handle'
+                    ]
+                ],
             ],
-            'label' => 'surname',
+            'label' => 'Password',
+            'type' => 'password',
+            'value' => '',
+            'extra' => [
+                'attr' => [
+                    'placeholder' => 'Password',
+                ]
+            ]
+        ],
+        'password_repeat' => [
+            'validators' => [],
+            'label' => 'Repeat password',
+            'type' => 'password',
+            'value' => '',
+            'extra' => [
+                'attr' => [
+                    'placeholder' => 'Password',
+                ]
+            ]
+        ],
+        'Amzius' => [
+            'validators' => [
+                'validate_not_empty',
+                // 'validate_is_number',
+                //'validate_is_adult',
+                'validate_field_range' => [
+                    'min' => 20,
+                    'max' => 100,
+                ]
+            ],
+            'label' => 'Amzius',
             'type' => 'text',
             'value' => '',
             'extra' => [
                 'attr' => [
-                    'placeholder' => 'irasyti reiksme',
+                    'placeholder' => 'Amzius',
                 ]
             ]
         ]
     ],
     'buttons' => [
-        'clear' => [
-            'title' => 'Clear',
-            'extra' => [
-                'attr' => [
-                    'class' => 'clear-btn',
-                ]
-            ]
-        ],
+//        'clear' => [
+//            'title' => 'Clear',
+//            'extra' => [
+//                'attr' => [
+//                    'class' => 'clear-btn',
+//                ]
+//            ]
+//        ],
         'save' => [
-            'title' => 'Save',
+            'title' => 'Ar as normalus?',
             'extra' => [
                 'attr' => [
                     'class' => 'save-btn',
@@ -81,6 +130,12 @@ $form = [
             ]
         ]
     ],
+    'validators' => [
+        'validate_fields_match' => [
+            'password',
+            'password_repeat',
+        ]
+    ]
 ];
 
 if (!empty($_POST)) {
@@ -93,12 +148,20 @@ if (!empty($_POST)) {
 ?>
 
 <html>
+<header>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Templates</title>
+    <link rel="stylesheet" href="templates/CSS/normalize.css">
+    <link rel="stylesheet" href="templates/CSS/style.css">
+</header>
 <body>
+<div class="wrapper">
+    <?php if ($success): ?>
+        <h3>Iveskite skaicius</h3>
 
-<?php if ($success): ?>
-    <h3>Iveskite skaicius</h3>
-
-<?php endif; ?>
-<?php require('templates/form.tpl.php'); ?>
+    <?php endif; ?>
+    <?php require('templates/form.tpl.php'); ?>
+</div>
 </body>
 </html>

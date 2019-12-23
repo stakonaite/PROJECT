@@ -1,0 +1,46 @@
+form{
+    width: 100%;
+    background-color: rgba(0, 100, 80, 0.6);
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.wrapper{
+padding: 0 10px;
+}
+
+input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid darkolivegreen;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+button{
+    background-color: bisque;
+    padding: 5px 10px;
+    border: 1px solid darkolivegreen;
+    border-radius: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover{
+    background-color: yellow;
+    color: bisque;
+}
+
+@media only screen and (min-width: 600px) {
+    .wrapper{
+        width: 600px;
+        margin: 0 auto;
+        padding: 0;
+    }
+    form{
+        width: 300px;
+        background-color: darkgoldenrod;
+    }
+}
