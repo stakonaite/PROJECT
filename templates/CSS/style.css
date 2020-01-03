@@ -24,7 +24,6 @@ button{
     border: 1px solid darkolivegreen;
     border-radius: 10px;
     box-sizing: border-box;
-    cursor: pointer;
     transition: 0.3s;
 }
 
@@ -42,5 +41,8 @@ button:hover{
     form{
         width: 300px;
         background-color: darkgoldenrod;
+    }
+    body{
+        cursor: url('../assets/images/cursor.png'), auto;
     }
 }

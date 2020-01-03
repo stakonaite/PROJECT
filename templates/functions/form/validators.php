@@ -63,7 +63,6 @@ function validate_fields_match($safe_input, &$form, $params){
     foreach ($params as $field_id){
         $compare = $compare ?? $safe_input[$field_id];
         if ($compare !== $safe_input[$field_id]){
-            var_dump('not');
             $form['fields'][$field_id]['error'] = 'nesutampa';
             return false;
         }
