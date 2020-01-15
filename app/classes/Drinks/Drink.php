@@ -65,8 +65,13 @@ class Drink
 //        $this->setImage($data['image']);
     }
 
+    /**
+     * si f-cija grazina masyva, visus getterius (get name, get amount..)
+     * @return array
+     */
     public function getData()
     {
+        //var_dump($this->data);
         $data = [];
         foreach ($this->properties as $property) {
             $getter = str_replace('_', '', 'get' . $property);
@@ -77,7 +82,7 @@ class Drink
 
     public function __construct(array $data = null)
     {
-        if (!$data){
+        if ($data){
             $this->setData($data);
         }
     }
@@ -87,6 +92,6 @@ class Drink
     }
 
     public function getId(){
-        return $this->data['id'];
+        return $this->data['id'] ?? null;
     }
 }
