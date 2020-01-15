@@ -13,3 +13,5 @@ require ROOT . '/core/functions/html/builder.php';
 
 // Load App Functions
 require ROOT . '/app/functions/validators.php';
+
+$app = new \App\App();

@@ -3,6 +3,8 @@
 
 namespace App\Drinks;
 
+use App\App;
+
 class Model
 {
     private $file_db;
@@ -10,14 +12,13 @@ class Model
 
     public function __construct()
     {
-        $this->file_db = new \Core\FileDB(DB_FILE);
-        $this->file_db->createTable($this->table_name);
+        App::$file_db->createTable($this->table_name);
     }
 
     public function insert(Drink $drink)
     {
         //var_dump($drink->getData());
-        return $this->file_db->insertRow($this->table_name, $drink->getData());
+        return App::$file_db->insertRow($this->table_name, $drink->getData());
     }
 
     /**
@@ -28,7 +29,7 @@ class Model
     public function get($conditions)
     {
         $drinks_objects = [];
-        $drinks_array = $this->file_db->getRowsWhere($this->table_name, $conditions);
+        $drinks_array = App::$file_db->getRowsWhere($this->table_name, $conditions);
 
         foreach ($drinks_array as $drink_id => $drink_array) {
             $drink = new Drink($drink_array);
@@ -40,12 +41,12 @@ class Model
 
     public function update(Drink $drink)
     {
-        return $this->file_db->updateRow($this->table_name, $drink->getId(), $drink->getData());
+        return App::$file_db->updateRow($this->table_name, $drink->getId(), $drink->getData());
     }
 
     public function delete(Drink $drink)
     {
-        return $this->file_db->deleteRow($this->table_name, $drink->getId());
+        return App::$file_db->deleteRow($this->table_name, $drink->getId());
     }
 
 }
