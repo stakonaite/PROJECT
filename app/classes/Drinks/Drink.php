@@ -6,8 +6,10 @@ class Drink
 {
     private $data;
     private $properties = [
-        'name', 'amount', 'abarot', 'image', 'id'
+        'name', 'amount', 'abarot', 'image', 'id', 'price', 'in_stock'
     ];
+    private $price;
+    private $in_stock;
 
     public function getName()
     {
@@ -49,6 +51,25 @@ class Drink
         $this->data['image'] = $url;
     }
 
+    public function setPrice($price)
+    {
+        $this->data['price'] = $price;
+    }
+
+    public function getPrice()
+    {
+        return $this->data['price'];
+    }
+
+    public function setIn_stock($in_stock)
+    {
+        $this->data['in_stock'] = $in_stock;
+    }
+
+    public function getIn_stock()
+    {
+        return $this->data['in_stock'];
+    }
 
     public function setData($data)
     {
@@ -82,16 +103,18 @@ class Drink
 
     public function __construct(array $data = null)
     {
-        if ($data){
+        if ($data) {
             $this->setData($data);
         }
     }
 
-    public function setId(int $id){
+    public function setId(int $id)
+    {
         $this->data['id'] = $id;
     }
 
-    public function getId(){
+    public function getId()
+    {
         return $this->data['id'] ?? null;
     }
 }
