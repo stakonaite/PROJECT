@@ -1,0 +1,60 @@
+.flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container {
+    display: block;
+}
+
+.flex_card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid darkslategrey;
+    margin: 10px 5px;
+    position: relative;
+    padding: 10px 10px;
+}
+
+.flex_name{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.position_abs{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: darkgrey;
+    height: 60px;
+}
+
+.nav-btn{
+    background: antiquewhite;
+    color: rosybrown;
+    border-radius: 10px;
+    border: 1px solid rosybrown;
+    padding: 10px 20px;
+    margin-left: 15px;
+    margin-right: 10px;
+
+}
+.nav-btn:hover{
+    transition: 2ms;
+    background-color: navajowhite;
+    color: dimgrey;
+    border: 1px solid dimgrey;
+    font-size: 110%;
+    box-shadow: 5px 5px dimgrey;
+}
