@@ -2,14 +2,13 @@
 
 namespace App\Drinks;
 
-class Drink
+use App\App;
+
+class Drink extends \App\DataHolder
 {
-    private $data;
-    private $properties = [
+    protected $properties = [
         'name', 'amount', 'abarot', 'image', 'id', 'price', 'in_stock'
     ];
-    private $price;
-    private $in_stock;
 
     public function getName()
     {
@@ -51,7 +50,7 @@ class Drink
         $this->data['image'] = $url;
     }
 
-    public function setPrice($price)
+    public function setPrice(float $price)
     {
         $this->data['price'] = $price;
     }
@@ -61,60 +60,13 @@ class Drink
         return $this->data['price'];
     }
 
-    public function setIn_stock($in_stock)
+    public function setInStock(int $in_stock)
     {
         $this->data['in_stock'] = $in_stock;
     }
 
-    public function getIn_stock()
+    public function getInStock()
     {
         return $this->data['in_stock'];
-    }
-
-    public function setData($data)
-    {
-        foreach ($this->properties as $property) {
-            if (isset($data[$property])) {
-                $value = $data[$property];
-                $setter = str_replace('_', '', 'set' . $property);
-                $this->{$setter}($value);
-            }
-        }
-//        $this->setName($data['name']);
-//        $this->setAmount($data['amount']);
-//        $this->setAbarot($data['abarot']);
-//        $this->setImage($data['image']);
-    }
-
-    /**
-     * si f-cija grazina masyva, visus getterius (get name, get amount..)
-     * @return array
-     */
-    public function getData()
-    {
-        //var_dump($this->data);
-        $data = [];
-        foreach ($this->properties as $property) {
-            $getter = str_replace('_', '', 'get' . $property);
-            $data[$property] = $this->{$getter}();
-        }
-        return $data;
-    }
-
-    public function __construct(array $data = null)
-    {
-        if ($data) {
-            $this->setData($data);
-        }
-    }
-
-    public function setId(int $id)
-    {
-        $this->data['id'] = $id;
-    }
-
-    public function getId()
-    {
-        return $this->data['id'] ?? null;
     }
 }

@@ -24,6 +24,5 @@ function validate_mail($field_value, &$field)
         $field['error'] = 'Vartotojas tokiu el.paštu jau registruotas!';
         return false;
     }
-
     return true;
 }

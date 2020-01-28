@@ -1,14 +1,21 @@
-.flex{
+.flex {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.form-container {
-    display: block;
+.flex-card-stock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.flex_card{
+.stock-color {
+    color: lightseagreen;
+}
+
+.flex-card {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,20 +26,28 @@
     padding: 10px 10px;
 }
 
-.flex_name{
+.flex-name {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.position_abs{
+.position-abarot {
     position: absolute;
     top: 0;
     right: 0;
+    margin-right: 5px;
 }
 
-nav{
+.position-price {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 5px;
+}
+
+nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -40,7 +55,7 @@ nav{
     height: 60px;
 }
 
-.nav-btn{
+.nav-btn {
     background: antiquewhite;
     color: rosybrown;
     border-radius: 10px;
@@ -50,11 +65,32 @@ nav{
     margin-right: 10px;
 
 }
-.nav-btn:hover{
+
+.nav-btn:hover {
     transition: 2ms;
     background-color: navajowhite;
     color: dimgrey;
     border: 1px solid dimgrey;
     font-size: 110%;
     box-shadow: 5px 5px dimgrey;
+}
+
+table {
+    width: 500px;
+    margin-top: 40px;
+    border: 2px solid darkslategrey;
+
+}
+
+th {
+    height: 50px;
+}
+
+td,th {
+    border-right: 1px solid darkslategrey;
+    text-align:center;
+}
+
+td:last-of-type, th:last-of-type {
+    border-right: 0;
 }

@@ -13,7 +13,8 @@ class FileDB
         $this->file_name = $file_name;
         $this->load();
     }
-
+//tikrinam ar toks failas yra (tokiu name), jei taip grazinam failo kontenta decodindami info(t.y. paverciam ji i masyva),
+//jei tokio failo nera grazinam tuscia masyva
     public function load()
     {
         if (file_exists($this->file_name)) {

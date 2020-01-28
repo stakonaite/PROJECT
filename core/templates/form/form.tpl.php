@@ -3,7 +3,7 @@
     <?php foreach ($data['fields'] ?? [] as $field_id => $field): ?>
         <label>
         <span class="label">
-            <?php print $field['label']; ?>
+            <?php print $field['label'] ?? ''; ?>
         </span>
             <input <?php print html_attr(
                 [
@@ -11,7 +11,7 @@
                     'type' => $field['type'],
                     'value' => $field['value'] ?? '',
                 ] +
-                $field['extra']['attr'] ?? []
+                ($field['extra']['attr'] ?? [])
             ); ?>
             >
 
@@ -27,7 +27,7 @@
                 [
                     'name' => 'action',
                     'value' => $button_id,
-                ] + $button['extra']['attr'] ?? []
+                ] + ($button['extra']['attr'] ?? [])
             ); ?>
         >
             <?php print $button['title']; ?>
@@ -39,5 +39,6 @@
             <?php print $data['message']; ?>
         </div>
     <?php endif; ?>
+
 
 </form>

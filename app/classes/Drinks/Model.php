@@ -39,6 +39,15 @@ class Model
         return $drinks_objects;
     }
 
+    public function getById($id)
+    {
+        $drink_data = App::$file_db->getRow($this->table_name, $id);
+        $drink = new Drink($drink_data);
+        $drink->setId($id);
+
+        return $drink;
+    }
+
     public function update(Drink $drink)
     {
         return App::$file_db->updateRow($this->table_name, $drink->getId(), $drink->getData());
