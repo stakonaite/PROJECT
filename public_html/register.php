@@ -1,158 +1,69 @@
 <?php
-
-use App\Users\Model;
-use App\Views\Form;
-
 require '../bootloader.php';
 
+$form = new \App\Users\Views\RegisterForm();
+$navigation = new \App\Views\Navigation();
+$footer = new \App\Views\Footer();
 
-function form_success($safe_input, &$form)
-{
-    $modelUsers = new App\Users\Model();
-    $user = new \App\Users\User($safe_input);
-    $modelUsers->insert($user);
-    $form['message'] = 'Registracija Sekminga!';
+function form_success($filtered_input, &$form) {
+    $user = new \App\Users\User($filtered_input);
+
+    $model = new \App\Users\Model();
+    $model->insert($user);
+
+    $form['message'] = 'Registracija sekminga! Galite prisijungti!';
 }
 
-function form_fail($safe_input, &$form)
-{
-    $form['message'] = 'Registracijos forma uzpildyta neteisingai, bandykite dar karta';
+switch (get_form_action()) {
+    case 'submit':
+        $filtered_input = get_form_input($form->getData());
+        $success = validate_form($filtered_input, $form->getData());
+        break;
+
+    default:
+        $success = false;
 }
-
-
-$form = [
-    'callbacks' => [
-        'success' => 'form_success',
-        'fail' => 'form_fail',
-    ],
-    'attr' => [
-        'method' => 'POST',
-        'class' => 'my-form',
-        'id' => 'login-form',
-    ],
-    'fields' => [
-        'name' => [
-            'label' => 'Name',
-            'type' => 'text',
-            'value' => '',
-            'extra' => [
-                'validators' => [
-                    'validate_not_empty',
-                    'validate_string_length' => [
-                        'min' => [
-                            'value' => 7,
-                            'message' => 'Name is too short',
-                        ],
-                        'max' => [
-                            'value' => 50,
-                            'message' => 'Name is too long'
-                        ]
-                    ]
-                ],
-                'attr' => [
-                    'placeholder' => 'Vardas ir Pavarde',
-                ]
-            ]
-        ],
-        'email' => [
-            'label' => 'Email',
-            'type' => 'email',
-            'extra' => [
-                'validators' => [
-                    'validate_not_empty',
-                ],
-                'attr' => [
-                    'class' => 'last-name',
-                    'id' => 'last-name',
-                    'placeholder' => 'Write your email',
-                ]
-            ]
-        ],
-        'password' => [
-            'label' => 'Password',
-            'type' => 'password',
-            'value' => '',
-            'extra' => [
-                'validators' => [
-                    'validate_not_empty',
-                    'validate_string_length' => [
-                        'min' => [
-                            'value' => 7,
-                            'message' => 'Password is too weak',
-                        ],
-                        'max' => [
-                            'value' => 20,
-                            'message' => 'Password is too long to handle'
-                        ]
-                    ]
-                ],
-                'attr' => [
-                    'placeholder' => 'Password',
-                ]
-            ]
-        ],
-        'password_repeat' => [
-            'label' => 'Repeat password',
-            'type' => 'password',
-            'value' => '',
-            'extra' => [
-                'validators' => [],
-                'attr' => [
-                    'placeholder' => 'Password',
-                ]
-            ]
-        ]
-    ],
-    'buttons' => [
-        'save' => [
-            'title' => 'Register',
-            'extra' => [
-                'attr' => [
-                    'class' => 'save-btn',
-                ]
-            ]
-        ]
-    ],
-    'validators' => [
-        'validate_fields_match' => [
-            'password',
-            'password_repeat',
-        ]
-    ]
-];
-
-$modelUsers = new \App\Users\Model();
-$users = $modelUsers->get([]);
-
-if (!empty($_POST)) {
-    $safe_input = get_form_input($form);
-    $success = validate_form($safe_input, $form);
-} else {
-    $success = false;
-}
-
-$view = [];
-$views['form'] = new \App\Views\Form($form);
-$views['nav'] = new \App\Views\Navigation();
-
 ?>
-
 <html>
-<header>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Templates</title>
-    <link rel="stylesheet" href="media/css/normalize.css">
-    <link rel="stylesheet" href="media/css/milligram.min.css">
-    <link rel="stylesheet" href="media/css/style.css">
-</header>
-<body>
-    <?php if ($success): ?>
-        <h3>Forma zj bs</h3>
-    <?php endif; ?>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Register</title>
+        <link rel="stylesheet" href="media/css/normalize.css">
+        <link rel="stylesheet" href="media/css/milligram.min.css">
+        <link rel="stylesheet" href="media/css/style.css">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!--    <script defer src="media/js/app.js"></script>-->
+    </head>
+    <body>
+        <!-- Header -->        
+        <header>
+            <?php print $navigation->render(); ?>
+        </header>
 
-    <?php print $views['nav']->render(); ?>
-    <?php print $views['form']->render(); ?>
-</body>
+        <!-- Main Content -->        
+        <main>
+            <section class="wrapper">
+                <div class="block">
+                    <?php if ($success): ?>
+                        <h1>Registracija sėkminga!</h1>
+                        <p>
+                            Galite prisijungti paspaudę <a href="/login.php">čia!</a>
+                        </p>
+                    <?php else: ?>
+                        <h1>Registruotis:</h1>
+
+                        <!-- Register Form -->
+                        <?php print $form->render(); ?>
+                    <?php endif; ?>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->        
+        <footer>
+            <?php print $footer->render(); ?>
+        </footer>
+    </body>
 </html>
-

@@ -1,65 +1,65 @@
 <?php
 
-
 namespace Core;
 
+class Session {
 
-class Session
-{
     private $model;
     private $user;
 
-    public function __construct()
-    {
+    public function __construct() {
+        session_start();
         $this->model = new \App\Users\Model();
+
+        // Execute login from cookie
         $this->loginFromCookie();
     }
 
-    public function loginFromCookie()
-    {
-        if ($_SESSION) {
+    public function loginFromCookie() {
+        if ($_SESSION ?? false) {
             $this->login($_SESSION['email'], $_SESSION['password']);
         }
     }
 
-    public function login($email, $password)
-    {
+    public function login($email, $password) {
         $users = $this->model->get([
             'email' => $email,
             'password' => $password
         ]);
+        
+        if ($users) {
+            $this->user = $users[0];
 
-        if (!empty($users)) {
             $_SESSION['email'] = $email;
             $_SESSION['password'] = $password;
 
-            $this->user = $users[0];
-
             return true;
+        } else {
+            $this->user = null;
         }
 
         return false;
     }
 
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
-    public function userLoggedIn()
-    {
-        if ($this->user) {
-            return true;
+    public function userLoggedIn() {
+        return $this->user ? true : false;
+    }
+
+    public function logout() {
+        if (session_status() == PHP_SESSION_ACTIVE) {
+            // Clear the superglobal
+            $_SESSION = [];
+
+            // Remove server-side cookie file
+            session_destroy();
+
+            // Remove client-side cookie
+            setcookie(session_name(), null, -1, "/");
         }
     }
 
-    public function logout($redirect = false)
-    {
-        $_SESSION = [];
-        session_destroy();
-        setcookie(session_name(), null, -1);
-        if ($redirect) {
-            header("Location: $redirect");
-        }
-    }
 }

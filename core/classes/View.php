@@ -1,39 +1,50 @@
 <?php
 
-
 namespace Core;
 
+class View {
 
-class View
-{
     protected $data;
 
-    public function __construct($data = [])
-    {
+    public function __construct($data = []) {
         $this->data = $data;
     }
-
+    
     /**
-     * Renders array of $this->data into template file
-     * @param string $template_path
-     * returns string Rendered HTML
+     * This function returns data as a reference, 
+     * so it is convenient to alter the data
+     * outside the view
+     * 
+     * @return array Reference to $this->data
      */
-
-    public function render($template_path)
-    {
+    public function &getData() {
+        return $this->data;
+    }
+    
+    /**
+     * Renders array into temlate
+     * @param string $temlate_path
+     * @return string HTML
+     * @Throws Exeption
+     */
+    public function render($template_path) {
+        //Check if template exists
         if (!file_exists($template_path)) {
-            throw (new\Exception("Template with filename: " . "$template_path does not exist!"));
+            throw (new \Exception("Template with filename: " . "$template_path dose not exsist!"));
         }
-
-        //pass arguments to the ***tpl.php as $data variable
+        
+        //pass arguments to the ***.tpl.php as $data variable
+        //as we require tpl file it's scoped to function's variables
         $data = $this->data;
-
-        //start buffering output to memory
+        
+        //Start buffering output to memory
         ob_start();
-        //load the view
+        
+        //Load the view (template)
         require $template_path;
-
-        //return buffered output as string
+        
+        //Return buffered output as string
         return ob_get_clean();
     }
+
 }

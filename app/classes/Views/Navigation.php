@@ -1,37 +1,38 @@
 <?php
 
-
 namespace App\Views;
 
+use App\App;
 
-use Core\View;
+class Navigation extends \Core\View {
 
-class Navigation extends \Core\View
-{
-    public function __construct()
-    {
-        $this->data = [
-            'left' => [
-                ['title' => 'Home', 'url' => '/index.php'],
-                ['title' => 'Orders', 'url' => '/orders.php']
-            ],
-            'right' => [
-                'login' => ['title' => 'Login', 'url' => '/login.php'],
-                'register' => ['title' => 'Register', 'url' => '/register.php'],
-                'logout' => ['title' => 'Logout', 'url' => '/logout.php']
-            ],
-        ];
+    public function __construct($data = []) {
+        parent::__construct($data);
 
-        if ($_SESSION['email'] ?? false) {
-            unset($this->data['right']['login']);
-            unset($this->data['right']['register']);
+        $this->addLink('left', '/', 'Home');
+        
+        if (App::$session->userLoggedIn()) {
+            $user = App::$session->getUser();
+            $label = $user->getEmail();
+            $this->addLink('right', '/logout.php', "Logout($label)");
         } else {
-            unset($this->data['right']['logout']);
+            $this->addLink('right', '/login.php', 'Prisijungti');
+            $this->addLink('right', '/register.php', 'Registruotis');            
         }
     }
 
-    public function render($template_path = ROOT . '/app/templates/navigation.tpl.php')
-    {
+    public function addLink($section, $url, $title) {
+        $link = ['url' => $url, 'title' => $title];
+        
+        if ($_SERVER['REQUEST_URI'] == $link['url']) {
+            $link['active'] = true;
+        }
+        
+        $this->data[$section][] = $link;
+    }
+
+    public function render($template_path = ROOT . '/app/templates/navigation.tpl.php') {
         return parent::render($template_path);
     }
+
 }
