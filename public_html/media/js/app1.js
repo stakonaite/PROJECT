@@ -1,10 +1,10 @@
 'use strict';
 
 const endpoints = {
-    get: 'api/participants/get.php',
-    create: 'api/participants/create.php',
-    update: 'api/participants/update.php',
-    delete: 'api/participants/delete.php'
+    get: 'api/party/get.php',
+    create: 'api/party/create.php',
+    update: 'api/party/update.php',
+    delete: 'api/party/delete.php'
 };
 
 /**

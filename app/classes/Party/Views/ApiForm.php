@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Participants\Views;
+
+namespace App\Party\Views;
+
 
 class ApiForm extends \Core\Views\Form
 {
-
     public function __construct($data = [])
     {
         $this->data = [
@@ -16,21 +17,21 @@ class ApiForm extends \Core\Views\Form
                         ]
                     ]
                 ],
-                'surname' => [
+                'location' => [
                     'extra' => [
                         'validators' => [
                             'validate_not_empty'
                         ]
                     ]
                 ],
-                'city' => [
+                'expectations' => [
                     'extra' => [
                         'validators' => [
                             'validate_not_empty'
                         ]
                     ]
                 ],
-                'age' => [
+                'drunkLevel' => [
                     'extra' => [
                         'validators' => [
                             'validate_not_empty'
@@ -44,5 +45,4 @@ class ApiForm extends \Core\Views\Form
             ]
         ];
     }
-
 }

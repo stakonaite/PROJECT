@@ -1,10 +1,10 @@
 'use strict';
 
 const endpoints = {
-    get: 'api/participants/get.php',
-    create: 'api/participants/create.php',
-    update: 'api/participants/update.php',
-    delete: 'api/participants/delete.php'
+    get: 'api/reviews/get.php',
+    create: 'api/reviews/create.php',
+    update: 'api/reviews/update.php',
+    delete: 'api/reviews/delete.php'
 };
 
 /**
@@ -20,24 +20,24 @@ function api(url, formData, success, fail) {
         method: 'POST',
         body: formData
     }).then(response => response.json())
-            .then(obj => {
-                console.log(obj);
-                if (obj.status === 'success') {
-                    success(obj.data);
-                } else {
-                    fail(obj.errors);
-                }
-            })
-            .catch(e => {
-                console.log(e);
-                fail(['Could not connect to API!']);
-            })
+        .then(obj => {
+            console.log(obj);
+            if (obj.status === 'success') {
+                success(obj.data);
+            } else {
+                fail(obj.errors);
+            }
+        })
+        .catch(e => {
+            console.log(e);
+            fail(['Could not connect to API!']);
+        })
 }
 
 /**
  * Form array
  * Contains all form-related functionality
- * 
+ *
  * Object forms
  */
 const forms = {
@@ -47,7 +47,9 @@ const forms = {
     create: {
         init: function () {
             console.log('Initializing create form...');
-            this.getElement().addEventListener('submit', this.onSubmitListener);
+            if (this.getElement()) {
+                this.getElement().addEventListener('submit', this.onSubmitListener);
+            }
         },
         getElement: function () {
             return document.getElementById("create-form");
@@ -129,9 +131,9 @@ const forms = {
         /**
          * Fills form fields with data
          * Each data index corelates with input name attribute
-         * 
+         *
          * @param {Element} form
-         * @param {Object} data 
+         * @param {Object} data
          */
         fill: function (form, data) {
             form.setAttribute('data-id', data.id);
@@ -154,7 +156,7 @@ const forms = {
         flash: {
             class: function (element, class_name) {
                 const prev = element.className;
-                
+
                 element.className += class_name;
                 setTimeout(function () {
                     element.className = prev;
@@ -168,7 +170,7 @@ const forms = {
             /**
              * Shows errors in form
              * Each error index correlates with input name attribute
-             * 
+             *
              * @param {Element} form
              * @param {Object} errors
              */
@@ -192,7 +194,7 @@ const forms = {
                 const errors = form.querySelectorAll('.field-error');
                 if (errors) {
                     errors.forEach(node => {
-                        node.remove();                 
+                        node.remove();
                     });
                 }
             }
@@ -205,7 +207,7 @@ const forms = {
  */
 const table = {
     getElement: function () {
-        return document.querySelector('#person-table tbody');
+        return document.querySelector('#person-table');
     },
     init: function () {
         this.data.load();
@@ -240,37 +242,56 @@ const table = {
     row: {
         /**
          * Builds row element from data
-         * 
+         *
          * @param {Object} data
          * @returns {Element}
          */
         build: function (data) {
-            const row = document.createElement('tr');
-            row.setAttribute('data-id', data.id);
+            const card = document.createElement('div');
+            card.className = 'card-container';
+            card.setAttribute('data-id', data.id);
 
             Object.keys(data).forEach(data_id => {
-                let td = document.createElement('td');
-                td.innerHTML = data[data_id];
-                row.append(td);
+                let span = document.createElement('span');
+                span.className = data_id;
+                span.innerHTML = data[data_id];
+                if (data_id != 'id' && data_id != 'rate') {
+                    card.append(span);
+                }
             });
 
             let buttons = {
-                delete: 'Ištrinti',
-                edit: 'Redaguoti'
+                delete: '🗑️',
+                edit: '✏️'
             };
 
-            Object.keys(buttons).forEach(button_id => {
-                let btn = document.createElement('td');
-                btn.innerHTML = buttons[button_id];
-                btn.className = button_id;
-                row.append(btn);
-            });
+            let div = document.createElement('div');
+            for (let i = 1; i <= 5; i++) {
+                let span = document.createElement('span');
+                span.className = 'star';
+                if (i <= data.rate) {
+                    span.innerHTML = '⭐';
+                } else {
+                    span.innerHTML = '★'
+                }
 
-            return row;
+                div.append(span);
+            }
+            card.append(div);
+
+            if (forms.create.getElement()) {
+                Object.keys(buttons).forEach(button_id => {
+                    let btn = document.createElement('div');
+                    btn.innerHTML = buttons[button_id];
+                    btn.className = button_id;
+                    card.append(btn);
+                });
+            }
+            return card;
         },
         /**
          * Appends row to table from data
-         * 
+         *
          * @param {Object} data
          */
         append: function (data) {
@@ -279,11 +300,11 @@ const table = {
         /**
          * Updates existing row in table from data
          * Row is selected via "id" index in data
-         * 
+         *
          * @param {Object} data
          */
         update: function (data) {
-            let row = table.getElement().querySelector('tr[data-id="' + data.id + '"]');
+            let row = table.getElement().querySelector('div[data-id="' + data.id + '"]');
             row.replaceWith(this.build(data));
             //row = this.build(data);
         },
@@ -292,8 +313,8 @@ const table = {
          * @param {Integer} id
          */
         delete: function (id) {
-            const row = table.getElement().querySelector('tr[data-id="' + id + '"]');
-            row.remove();
+            const card = table.getElement().querySelector('div[data-id="' + id + '"]');
+            card.remove();
         }
     },
     buttons: {
@@ -308,9 +329,9 @@ const table = {
                 if (e.target.className === 'delete') {
                     let formData = new FormData();
 
-                    let tr = e.target.closest('tr');
-
-                    formData.append('id', tr.getAttribute('data-id'));
+                    let card = e.target.closest('div.card-container');
+                    console.log(card);
+                    formData.append('id', card.getAttribute('data-id'));
                     api(endpoints.delete, formData, table.buttons.delete.success, table.buttons.delete.fail);
                 }
             },
@@ -333,7 +354,7 @@ const table = {
                 if (e.target.className === 'edit') {
                     let formData = new FormData();
 
-                    let tr = e.target.closest('tr');
+                    let tr = e.target.closest('div.card-container');
 
                     formData.append('row_id', tr.getAttribute('data-id'));
                     api(endpoints.get, formData, table.buttons.edit.success, table.buttons.edit.fail);

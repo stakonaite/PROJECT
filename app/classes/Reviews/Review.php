@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Participants;
 
-class Participant
+namespace App\Reviews;
+
+
+class Review
 {
-
     private $data = [];
 
     public function __construct($data = null)
@@ -13,11 +14,11 @@ class Participant
             $this->setData($data);
         } else {
             $this->data = [
+                'review' => null,
                 'id' => null,
-                'name' => null,
-                'surname' => null,
-                'city' => null,
-                'age' => null,
+                'date' => null,
+                'user_id' => null,
+                'rate' => null,
             ];
         }
     }
@@ -33,10 +34,11 @@ class Participant
         } else {
             $this->data['id'] = null;
         }
-        $this->setName($array['name'] ?? null);
-        $this->setSurname($array['surname'] ?? null);
-        $this->setCity($array['city'] ?? null);
-        $this->setAge($array['age'] ?? null);
+
+        $this->setReview($array['review'] ?? null);
+        $this->setDate($array['date'] ?? null);
+        $this->setUserId($array['user_id'] ?? null);
+        $this->setRate($array['rate'] ?? null);
     }
 
     /**
@@ -47,10 +49,10 @@ class Participant
     {
         return [
             'id' => $this->getId(),
-            'name' => $this->getName(),
-            'surname' => $this->getSurname(),
-            'city' => $this->getCity(),
-            'age' => $this->getAge(),
+            'review' => $this->getReview(),
+            'date' => $this->getDate(),
+            'user_id' => $this->getUserId(),
+            'rate' => $this->getRate(),
         ];
     }
 
@@ -74,64 +76,65 @@ class Participant
      * Sets name
      * @param string $name
      */
-    public function setName(string $name)
+    public function setReview(string $review)
     {
-        $this->data['name'] = $name;
+        $this->data['review'] = $review;
     }
 
     /**
      * Returns name
      * @return string
      */
-    public function getName()
+    public function getReview()
     {
-        return $this->data['name'];
+        return $this->data['review'];
     }
 
     /**
      * Sets data surname
      * @param string $surname
      */
-    public function setSurname(string $surname)
+    public function setDate(int $date)
     {
-        $this->data['surname'] = $surname;
+        $this->data['date'] = $date;
     }
 
     /**
      * @return mixed
      */
-    public function getSurname()
+    public function getDate()
     {
-        return $this->data['surname'];
+        return $this->data['date'];
     }
 
-    /**
-     * Sets data city
-     * @param string $city
-     */
-    public function setCity(string $city)
+    public function setUserId(int $id)
     {
-        $this->data['city'] = $city;
+        $this->data['user_id'] = $id;
     }
 
     /**
      * @return mixed
      */
-    public function getCity()
+    public function getUserId()
     {
-        return $this->data['city'];
+        return $this->data['user_id'];
     }
 
-    public function setAge(string $age)
+    /**
+     * @param int $rate
+     */
+    public function setRate(int $rate)
     {
-        $this->data['age'] = $age;
+        $this->data['rate'] = $rate;
     }
 
     /**
      * @return mixed
      */
-    public function getAge()
+
+    public function getRate()
     {
-        return $this->data['age'];
+        return $this->data['rate'];
     }
 }
+

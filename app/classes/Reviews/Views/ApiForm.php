@@ -1,42 +1,31 @@
 <?php
 
-namespace App\Participants\Views;
+
+namespace App\Reviews\Views;
+
 
 class ApiForm extends \Core\Views\Form
 {
-
     public function __construct($data = [])
     {
         $this->data = [
             'fields' => [
-                'name' => [
+                'review' => [
                     'extra' => [
                         'validators' => [
                             'validate_not_empty'
                         ]
                     ]
                 ],
-                'surname' => [
+                'rate' => [
                     'extra' => [
                         'validators' => [
-                            'validate_not_empty'
+                            'validate_not_empty',
+                            'validate_is_number',
+                            'validate_rate'
                         ]
                     ]
-                ],
-                'city' => [
-                    'extra' => [
-                        'validators' => [
-                            'validate_not_empty'
-                        ]
-                    ]
-                ],
-                'age' => [
-                    'extra' => [
-                        'validators' => [
-                            'validate_not_empty'
-                        ]
-                    ]
-                ],
+                ]
             ],
             'callbacks' => [
                 'success' => 'form_success',
@@ -44,5 +33,4 @@ class ApiForm extends \Core\Views\Form
             ]
         ];
     }
-
 }

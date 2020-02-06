@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Participants;
 
-class Participant
+namespace App\Party;
+
+
+class Party
 {
-
     private $data = [];
 
     public function __construct($data = null)
@@ -15,9 +16,9 @@ class Participant
             $this->data = [
                 'id' => null,
                 'name' => null,
-                'surname' => null,
-                'city' => null,
-                'age' => null,
+                'location' => null,
+                'expectations' => null,
+                'drunkLevel' => null,
             ];
         }
     }
@@ -33,10 +34,11 @@ class Participant
         } else {
             $this->data['id'] = null;
         }
+
         $this->setName($array['name'] ?? null);
-        $this->setSurname($array['surname'] ?? null);
-        $this->setCity($array['city'] ?? null);
-        $this->setAge($array['age'] ?? null);
+        $this->setLocation($array['location'] ?? null);
+        $this->setExpectations($array['expectations'] ?? null);
+        $this->setDrunkLevel($array['drunkLevel'] ?? null);
     }
 
     /**
@@ -48,9 +50,9 @@ class Participant
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'surname' => $this->getSurname(),
-            'city' => $this->getCity(),
-            'age' => $this->getAge(),
+            'location' => $this->getLocation(),
+            'expectations' => $this->getExpectations(),
+            'drunkLevel' => $this->getDrunkLevel(),
         ];
     }
 
@@ -92,46 +94,46 @@ class Participant
      * Sets data surname
      * @param string $surname
      */
-    public function setSurname(string $surname)
+    public function setLocation(string $location)
     {
-        $this->data['surname'] = $surname;
+        $this->data['location'] = $location;
     }
 
     /**
      * @return mixed
      */
-    public function getSurname()
+    public function getLocation()
     {
-        return $this->data['surname'];
+        return $this->data['location'];
     }
 
     /**
      * Sets data city
      * @param string $city
      */
-    public function setCity(string $city)
+    public function setExpectations(string $expectations)
     {
-        $this->data['city'] = $city;
+        $this->data['expectations'] = $expectations;
     }
 
     /**
      * @return mixed
      */
-    public function getCity()
+    public function getExpectations()
     {
-        return $this->data['city'];
+        return $this->data['expectations'];
     }
 
-    public function setAge(string $age)
+    public function setDrunkLevel(string $drunkLevel)
     {
-        $this->data['age'] = $age;
+        $this->data['drunkLevel'] = $drunkLevel;
     }
 
     /**
      * @return mixed
      */
-    public function getAge()
+    public function getDrunkLevel()
     {
-        return $this->data['age'];
+        return $this->data['drunkLevel'];
     }
 }

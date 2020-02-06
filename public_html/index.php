@@ -42,6 +42,7 @@ if (!App::$session->userLoggedIn()) {
                                     <th>Vardas</th>
                                     <th>Pavardė</th>
                                     <th>Miestas</th>
+                                    <th>Amžius</th>
                                     <th>Trinimas</th>
                                     <th>Redagavimas</th>
                                 </tr>

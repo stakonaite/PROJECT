@@ -1,12 +1,15 @@
 <?php
 
+
 namespace App\Users\Views;
 
-class RegisterForm extends \Core\Views\Form
-{
+use App\App;
 
+class ProfileForm extends \Core\Views\Form
+{
     public function __construct($data = [])
     {
+    $user = App::$session->getUser();
         $this->data = [
             'attr' => [
                 'id' => 'register-form',
@@ -16,6 +19,7 @@ class RegisterForm extends \Core\Views\Form
                 'email' => [
                     'label' => 'Email',
                     'type' => 'email',
+                    'value' => $user->getEmail(),
                     'extra' => [
                         'validators' => [
                             'validate_not_empty',
@@ -26,6 +30,7 @@ class RegisterForm extends \Core\Views\Form
                 'name' => [
                     'label' => 'Name',
                     'type' => 'text',
+                    'value' => $user->getName(),
                     'extra' => [
                         'validators' => [
                             'validate_not_empty',
@@ -36,6 +41,7 @@ class RegisterForm extends \Core\Views\Form
                 'surname' => [
                     'label' => 'Surname',
                     'type' => 'text',
+                    'value' => $user->getSurname(),
                     'extra' => [
                         'validators' => [
                             'validate_not_empty',
@@ -46,6 +52,7 @@ class RegisterForm extends \Core\Views\Form
                 'phone' => [
                     'label' => 'Phone number (eg:+3706...)',
                     'type' => 'text',
+                    'value' => $user->getPhone(),
                     'extra' => [
                         'validators' => [
                             'validate_not_empty',
@@ -57,6 +64,7 @@ class RegisterForm extends \Core\Views\Form
                 'password' => [
                     'label' => 'Password',
                     'type' => 'password',
+                    'value' => $user->getPassword(),
                     'extra' => [
                         'validators' => [
                             'validate_not_empty'
@@ -75,7 +83,7 @@ class RegisterForm extends \Core\Views\Form
             ],
             'buttons' => [
                 'submit' => [
-                    'title' => 'Registruotis',
+                    'title' => 'Pakeisti',
                 ],
             ],
             'validators' => [
@@ -89,5 +97,4 @@ class RegisterForm extends \Core\Views\Form
             ],
         ];
     }
-
 }

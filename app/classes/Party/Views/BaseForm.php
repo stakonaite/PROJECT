@@ -1,29 +1,30 @@
 <?php
 
-namespace App\Participants\Views;
+
+namespace App\Party\Views;
+
 
 class BaseForm extends \Core\Views\Form
 {
-
     public function __construct($data = [])
     {
         $this->data = [
             'fields' => [
                 'name' => [
-                    'label' => 'Vardas',
+                    'label' => 'Participant',
                     'type' => 'text',
                 ],
-                'surname' => [
-                    'label' => 'Pavardė',
+                'location' => [
+                    'label' => 'Location',
                     'type' => 'text',
                 ],
-                'city' => [
-                    'label' => 'Miestas',
+                'expectations' => [
+                    'label' => 'Expectations',
                     'type' => 'text',
                 ],
-                'age' => [
-                    'label' => 'amžius',
-                    'type' => 'number',
+                'drunkLevel' => [
+                    'label' => 'Forecasted drunk level',
+                    'type' => 'text',
                 ],
             ],
             'buttons' => [
@@ -33,5 +34,4 @@ class BaseForm extends \Core\Views\Form
             ]
         ];
     }
-
 }

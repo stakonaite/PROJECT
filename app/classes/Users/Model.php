@@ -15,10 +15,11 @@ class Model
         App::$db->createTable($this->table_name);
     }
 
-    /** 2uzd turi irasyti $drink i duombaze
+    /** 2uzd turi irasyti i duombaze
      * @param Drink $drink
      */
-    public function insert(User $user) {
+    public function insert(User $user)
+    {
         return App::$db->insertRow($this->table_name, $user->getData());
     }
 
@@ -27,15 +28,16 @@ class Model
      * @param array $conditions
      * @return User[]
      */
-    public function get($conditions = []) {
+    public function get($conditions = [])
+    {
         $users = [];
-        
+
         $rows = App::$db->getRowsWhere($this->table_name, $conditions);
         foreach ($rows as $row_id => $row) {
             $row['id'] = $row_id;
             $users[] = new User($row);
         }
-        
+
         return $users;
     }
 
@@ -59,13 +61,23 @@ class Model
         App::$db->deleteRow($this->table_name, $user->getId());
     }
 
-    public function deleteAll() {
+    public function deleteAll()
+    {
         App::$db->truncateTable($this->table_name);
     }
 
     public function __destruct()
     {
         App::$db->save();
+    }
+
+    //
+    public function getById($id)
+    {
+        $user_data = App::$db->getRow($this->table_name, $id);
+        $user = new User($user_data);
+        $user->setId($id);
+        return $user;
     }
 }
 
