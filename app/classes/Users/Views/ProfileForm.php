@@ -16,17 +16,6 @@ class ProfileForm extends \Core\Views\Form
                 'method' => 'POST',
             ],
             'fields' => [
-                'email' => [
-                    'label' => 'Email',
-                    'type' => 'email',
-                    'value' => $user->getEmail(),
-                    'extra' => [
-                        'validators' => [
-                            'validate_not_empty',
-                            'validate_mail'
-                        ]
-                    ],
-                ],
                 'name' => [
                     'label' => 'Name',
                     'type' => 'text',
@@ -64,7 +53,6 @@ class ProfileForm extends \Core\Views\Form
                 'password' => [
                     'label' => 'Password',
                     'type' => 'password',
-                    'value' => $user->getPassword(),
                     'extra' => [
                         'validators' => [
                             'validate_not_empty'

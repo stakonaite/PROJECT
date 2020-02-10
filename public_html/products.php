@@ -4,8 +4,8 @@ use App\App;
 
 require '../bootloader.php';
 
-$createForm = new \App\Reviews\Views\CreateForm();
-$updateForm = new \App\Reviews\Views\UpdateForm();
+$createForm = new \App\Products\Views\CreateForm();
+$updateForm = new \App\Products\Views\UpdateForm();
 $navigation = new \App\Views\Navigation();
 $footer = new \App\Views\Footer();
 
@@ -29,7 +29,7 @@ $footer = new \App\Views\Footer();
     <section class="wrapper">
         <?php if (App::$session->userLoggedIn()): ?>
             <div class="block" id="review-form">
-                <h1>Reviews</h1>
+                <h1>Products list</h1>
                 <?php print $createForm->render(); ?>
             </div>
         <?php endif; ?>
@@ -53,6 +53,6 @@ $footer = new \App\Views\Footer();
     <?php print $footer->render(); ?>
 </footer>
 
-<script defer src="media/js/appReviews.js"></script>
+<script defer src="media/js/appProducts.js"></script>
 </body>
 </html>
