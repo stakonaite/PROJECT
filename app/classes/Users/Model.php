@@ -15,8 +15,9 @@ class Model
         App::$db->createTable($this->table_name);
     }
 
-    /** 2uzd turi irasyti i duombaze
-     * @param Drink $drink
+    /**
+     * @param User $user
+     * @return bool
      */
     public function insert(User $user)
     {

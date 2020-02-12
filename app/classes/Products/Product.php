@@ -7,62 +7,43 @@ namespace App\Products;
 class Product
 {
     private $data = [];
+    private $properties = [
+        'id', 'img', 'price', 'name', 'in_stock', 'discount'
+    ];
 
     public function __construct($data = null)
     {
         if ($data) {
             $this->setData($data);
-        } else {
-            $this->data = [
-                'img' => null,
-                'id' => null,
-                'price' => null,
-                'name' => null,
-                'in_stock' => null,
-                'discount' => null,
-            ];
         }
     }
 
-    /**
-     * * Sets all data from array
-     * @param $array
-     */
-    public function setData($array)
+    public function setData($data)
     {
-        if (isset($array['id'])) {
-            $this->setId($array['id']);
-        } else {
-            $this->data['id'] = null;
+        foreach ($this->properties as $property) {
+            if (isset($data[$property])) {
+                $value = $data[$property];
+                $setter = str_replace('_', '', 'set' . $property);
+                $this->{$setter}($value);
+            }
         }
-
-        $this->setImg($array['img'] ?? null);
-        $this->setPrice($array['price'] ?? null);
-        $this->setName($array['name'] ?? null);
-        $this->setInStock($array['in_stock'] ?? null);
-        $this->setDiscount($array['discount'] ?? null);
     }
 
-    /**
-     * Gets all data as array
-     * @return array
-     */
     public function getData()
     {
-        return [
-            'id' => $this->getId(),
-            'img' => $this->getImg(),
-            'price' => $this->getPrice(),
-            'name' => $this->getName(),
-            'in_stock' => $this->getInStock(),
-            'discount' => $this->getDiscount(),
-        ];
+        $data = [];
+        foreach ($this->properties as $property) {
+            $getter = str_replace('_', '', 'get' . $property);
+            $data[$property] = $this->{$getter}();
+        }
+        return $data;
     }
 
     /**
      * @param int $id
      */
-    public function setId(int $id)
+    public
+    function setId(int $id)
     {
         $this->data['id'] = $id;
     }
@@ -70,92 +51,103 @@ class Product
     /**
      * @return int|null
      */
-    public function getId()
+    public
+    function getId()
     {
         return $this->data['id'];
     }
 
     /**
-     * Sets name
-     * @param string $name
+     * @param string $img
      */
-    public function setImg(string $img)
+    public
+    function setImg(string $img)
     {
         $this->data['img'] = $img;
     }
 
     /**
-     * Returns name
-     * @return string
+     * @return mixed|string
      */
-    public function getImg()
+    public
+    function getImg()
     {
-        return $this->data['img'];
+        return $this->data['img'] ?? 'https://via.placeholder.com/400x400.png';
     }
 
     /**
-     * Sets data surname
-     * @param string $surname
+     * @param int $price
      */
-    public function setPrice(int $price)
+    public
+    function setPrice(int $price)
     {
         $this->data['price'] = $price;
     }
 
     /**
-     * @return mixed
+     * @return int|mixed
      */
-    public function getPrice()
+    public
+    function getPrice()
     {
-        return $this->data['price'];
+        return $this->data['price'] ?? 0;
     }
 
-    public function setName(string $name)
+    public
+    function setName(string $name)
     {
         $this->data['name'] = $name;
     }
 
     /**
-     * @return mixed
+     * @return mixed|string
      */
-    public function getName()
+    public
+    function getName()
     {
-        return $this->data['name'];
+        return $this->data['name'] ?? 'Nežinoma Prekė';
     }
 
     /**
-     * @param int $rate
+     * @param int $in_stock
      */
-    public function setInStock(int $in_stock)
+    public
+    function setInStock(int $in_stock)
     {
+        if ($in_stock < 0) {
+            $in_stock = 0;
+        }
+
         $this->data['in_stock'] = $in_stock;
     }
 
     /**
      * @return mixed
      */
-
-    public function getInStock()
+    public
+    function getInStock()
     {
-        return $this->data['in_stock'];
+        return $this->data['in_stock'] ?? 0;
     }
 
     /**
      * @param int $discount
      */
 
-    public function setDiscount(int $discount)
+    public
+    function setDiscount(int $discount)
     {
         $this->data['discount'] = $discount;
     }
 
     /**
-     * @return mixed
+     * @return int|mixed
      */
 
-    public function getDiscount()
+    public
+    function getDiscount()
     {
-        return $this->data['discount'];
+        return $this->data['discount'] ?? 0;
     }
 }
 

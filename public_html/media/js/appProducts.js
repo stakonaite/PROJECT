@@ -307,7 +307,8 @@ const table = {
 
             let buttons = {
                 delete: '🗑️',
-                edit: '✏️'
+                edit: '✏️',
+                order: '✅️',
             };
 
             //  let div = document.createElement('div');
@@ -404,6 +405,38 @@ const table = {
                 let person_data = data[0];
                 forms.update.show();
                 forms.update.fill(person_data);
+            },
+            fail: function (errors) {
+                alert(errors[0]);
+            }
+        },
+        order: {
+            init: function () {
+                table.getElement().addEventListener('click', this.onClickListener);
+            },
+            onClickListener: function (e) {
+                if (e.target.className === 'order') {
+                    let formData = new FormData();
+
+                    let card = e.target.closest('div.product-card-container');
+
+                    formData.append('row_id', card.getAttribute('data-id'));
+                    api(endpoints.get, formData, table.buttons.order.success, table.buttons.order.fail);
+                }
+            },
+            success: function (data) {
+                let product = data[0];
+                product.in_stock -= 1;
+
+                let formData = new FormData();
+                formData.append('id', product.id);
+                formData.append('img', product.img);
+                formData.append('price', product.price);
+                formData.append('name', product.name);
+                formData.append('in_stock', product.in_stock);
+                formData.append('discount', product.discount);
+
+                api(endpoints.update, formData, forms.update.success, forms.update.fail);
             },
             fail: function (errors) {
                 alert(errors[0]);
